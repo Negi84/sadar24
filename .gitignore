@@ -1,0 +1,6 @@
+vendor/
+app1/
+sadar24.zip
+vendor.zip
+storage/logs/*.log
+storage/debugbar/*json

@@ -1,0 +1,195 @@
+  .fakeimg {
+    height: 391px;
+   /* background: #F2A0A8; */
+  }
+  .logo{
+  width: 20%;
+  height: 92px;
+  float: left;
+    font-size: 30;
+    
+  color: white;
+  text-align: center;
+  
+}
+.right-section{
+  width: 79.5%;
+  height: 58px;
+  margin-left: 20%;
+  color: white;
+  font-size: 22px;
+  padding-top: 35px;
+  
+  text-align: right;
+  
+  
+}
+.menu{
+    background-color: black;padding-top: 20px;
+  }
+  .submenu{
+    float: left;
+    min-width: 20px;
+    background-color: transparent;
+    margin-left: 5px;
+    padding: 5px;
+    margin-bottom: 5px;
+    background-color: black;
+    color: white;
+    
+    list-style: none;
+  }
+   .btn{
+    height: 40px;
+    width: 150px;
+    border-radius: 5px;
+    background-color: red;
+
+  }
+  .common-padding{
+    padding-bottom: 10px;
+    padding-top: 20px; 
+  }
+  .col-lg-3{
+    padding-top: 20px;
+    padding-bottom: 10px;
+  }
+  .text-900{
+    font-weight: 900;
+  }
+  .text-600{
+    font-weight: 600;
+  }
+  .text-300{
+    font-weight: 300;
+  }
+  .bg-color{
+    background-color: #F2A0A8;
+  }
+  .full-width{
+    width: 100%;
+  }
+  .title{
+  height: 113px;
+  
+  padding-top: 30px;
+  background-color: transparent;
+  text-align: center;
+  font-size: 25px;
+  font-weight: 900;
+}
+.col-sm-4{
+ /* background-color: #F1A2A7; */
+}
+img{
+  overflow:hidden;
+
+}
+.facking img{
+  width: 100px;
+  height: 100px;
+}
+.slidder-img{
+  width: 100%;
+  overflow:hidden;
+}
+.paddding-up{
+  padding-top: 100px;
+}
+@media only screen and (max-width: 768px) {
+  .row{
+    background-color: #F2A0A8;
+  }
+  .slidder-img{
+    width: 483px
+    margin-left: -15px;
+
+  }
+ .row-top{
+  margin-top: -20px;
+ } 
+  .padding-up{
+  margin-top: 20px;
+  }
+  .fakeimg img {
+    height: 400px;
+    width: 400px; 
+    overflow: hidden;
+  }
+  
+}
+@media only screen and (max-width: 600px) {
+  body {
+    background-color: lightblue;
+
+  }
+  .slidder-img{
+    width: 483px
+    margin-left: -15px;
+
+  }
+  
+  .padding-up{
+  margin-top: 20px;
+  }
+}
+div.fakeimg img{
+  
+}
+.icon{
+  width: 8.666667%;
+}
+.font-900{
+  font-weight: 900;
+}
+.banner-add{
+  height: 400px;
+  width: 100%;
+
+  
+}
+.banner-2{
+  width: 24%;
+  float: left;
+  height: 120px;
+  padding-left: 2px;
+  padding-right: 2px;
+  
+}
+.banner-3{
+  width: 100%;
+  float: left;
+  margin-top: 2px;
+  text-align: center;
+  padding: 3px;
+}
+.banner-add{
+  height: 400px;
+  width: 100%;
+
+  
+}
+.banner{
+  
+  
+  height: 200px;
+}
+.banner-color{
+  background-color: #F4F4F4;
+}
+ .btn {
+  background-color: red;
+  color:white;
+  width: 220px;
+  height: 40px;
+  font-size: 25px;
+  text-decoration: none;
+  padding: 0px;
+  border-radius: 5px;
+}
+.title-icon{
+  
+  padding-top: 5px;
+  padding-bottom: 5px;
+  
+}
