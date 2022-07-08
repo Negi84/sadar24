@@ -1,6 +1,3 @@
-<?php
-dd(config('app.name'));
-?>
 <?php $__env->startSection('content'); ?>
     <div class="container-fluid px-0 px-md-4 py-3">
         

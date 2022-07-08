@@ -1,23 +1,23 @@
 <?php
 
-use App\Http\Controllers\ClubPointController;
-use App\Http\Controllers\AffiliateController;
-use App\Currency;
-use App\BusinessSetting;
-use App\ProductStock;
-use App\Address;
-use App\CustomerPackage;
-use App\Upload;
-use App\Translation;
-use App\City;
-use App\Utility\CategoryUtility;
-use App\Wallet;
-use App\CombinedOrder;
-use App\User;
 use App\Addon;
+use App\Address;
+use App\BusinessSetting;
+use App\City;
+use App\CombinedOrder;
+use App\Currency;
+use App\CustomerPackage;
+use App\Http\Controllers\AffiliateController;
+use App\Http\Controllers\ClubPointController;
 use App\Http\Controllers\CommissionController;
-use App\Utility\SendSMSUtility;
+use App\ProductStock;
+use App\Translation;
+use App\Upload;
+use App\User;
+use App\Utility\CategoryUtility;
 use App\Utility\NotificationUtility;
+use App\Utility\SendSMSUtility;
+use App\Wallet;
 
 //sensSMS function for OTP
 if (!function_exists('sendSMS')) {
@@ -32,7 +32,10 @@ if (!function_exists('areActiveRoutes')) {
     function areActiveRoutes(array $routes, $output = "active")
     {
         foreach ($routes as $route) {
-            if (Route::currentRouteName() == $route) return $output;
+            if (Route::currentRouteName() == $route) {
+                return $output;
+            }
+
         }
     }
 }
@@ -42,7 +45,10 @@ if (!function_exists('areActiveRoutesHome')) {
     function areActiveRoutesHome(array $routes, $output = "active")
     {
         foreach ($routes as $route) {
-            if (Route::currentRouteName() == $route) return $output;
+            if (Route::currentRouteName() == $route) {
+                return $output;
+            }
+
         }
     }
 }
@@ -426,7 +432,7 @@ if (!function_exists('renderStarRating')) {
         $emptyStar = "<i class = 'las la-star'></i>";
         $rating = $rating <= $maxRating ? $rating : $maxRating;
 
-        $fullStarCount = (int)$rating;
+        $fullStarCount = (int) $rating;
         $halfStarCount = ceil($rating) - $fullStarCount;
         $emptyStarCount = $maxRating - $fullStarCount - $halfStarCount;
 
@@ -439,37 +445,35 @@ if (!function_exists('renderStarRating')) {
 
 function translate($key, $lang = null)
 {
-    if($lang == null){
+    if ($lang == null) {
         $lang = App::getLocale();
     }
 
     $lang_key = preg_replace('/[^A-Za-z0-9\_]/', '', str_replace(' ', '_', strtolower($key)));
 
-    $translations_default = Cache::rememberForever('translations-'.env('DEFAULT_LANGUAGE', 'en'), function () {
+    $translations_default = Cache::rememberForever('translations-' . env('DEFAULT_LANGUAGE', 'en'), function () {
         return Translation::where('lang', env('DEFAULT_LANGUAGE', 'en'))->pluck('lang_value', 'lang_key')->toArray();
     });
 
-    if(!isset($translations_default[$lang_key])){
+    if (!isset($translations_default[$lang_key])) {
         $translation_def = new Translation;
         $translation_def->lang = env('DEFAULT_LANGUAGE', 'en');
         $translation_def->lang_key = $lang_key;
         $translation_def->lang_value = $key;
         $translation_def->save();
-        Cache::forget('translations-'.env('DEFAULT_LANGUAGE', 'en'));
+        Cache::forget('translations-' . env('DEFAULT_LANGUAGE', 'en'));
     }
 
-    $translation_locale = Cache::rememberForever('translations-'.$lang, function () use ($lang) {
+    $translation_locale = Cache::rememberForever('translations-' . $lang, function () use ($lang) {
         return Translation::where('lang', $lang)->pluck('lang_value', 'lang_key')->toArray();
     });
 
     //Check for session lang
-    if(isset($translation_locale[$lang_key])){
+    if (isset($translation_locale[$lang_key])) {
         return $translation_locale[$lang_key];
-    }
-    elseif(isset($translations_default[$lang_key])){
+    } elseif (isset($translations_default[$lang_key])) {
         return $translations_default[$lang_key];
-    }
-    else{
+    } else {
         return $key;
     }
 }
@@ -528,26 +532,26 @@ function getShippingCost($carts, $index)
     }
 
     if (get_setting('shipping_type') == 'flat_rate') {
-		// return $calculate_shipping / count($carts);
-      return ($calculate_shipping / 100) * $cartItem['price'];	
-  } elseif (get_setting('shipping_type') == 'seller_wise_shipping') {
-    if ($product->added_by == 'admin') {
-        return get_setting('shipping_cost_admin') / count($admin_products);
+        // return $calculate_shipping / count($carts);
+        return ($calculate_shipping / 100) * $cartItem['price'];
+    } elseif (get_setting('shipping_type') == 'seller_wise_shipping') {
+        if ($product->added_by == 'admin') {
+            return get_setting('shipping_cost_admin') / count($admin_products);
+        } else {
+            return \App\Shop::where('user_id', $product->user_id)->first()->shipping_cost / count($seller_products[$product->user_id]);
+        }
+    } elseif (get_setting('shipping_type') == 'area_wise_shipping') {
+        if ($product->added_by == 'admin') {
+            return $calculate_shipping / count($admin_products);
+        } else {
+            return $calculate_shipping / count($seller_products[$product->user_id]);
+        }
     } else {
-        return \App\Shop::where('user_id', $product->user_id)->first()->shipping_cost / count($seller_products[$product->user_id]);
+        if ($product->is_quantity_multiplied && get_setting('shipping_type') == 'product_wise_shipping') {
+            return $product->shipping_cost * $cartItem['quantity'];
+        }
+        return $product->shipping_cost;
     }
-} elseif (get_setting('shipping_type') == 'area_wise_shipping') {
-    if ($product->added_by == 'admin') {
-        return $calculate_shipping / count($admin_products);
-    } else {
-        return $calculate_shipping / count($seller_products[$product->user_id]);
-    }
-} else {
-    if($product->is_quantity_multiplied && get_setting('shipping_type') == 'product_wise_shipping') {
-        return  $product->shipping_cost * $cartItem['quantity'];
-    }
-    return $product->shipping_cost;
-}
 }
 
 function timezones()
@@ -596,7 +600,7 @@ if (!function_exists('my_asset')) {
         if (env('FILESYSTEM_DRIVER') == 's3') {
             return Storage::disk('s3')->url($path);
         } else {
-            return app('url')->asset('public/' . $path, $secure);
+            return app('url')->asset($path, $secure);
         }
     }
 }
@@ -611,10 +615,9 @@ if (!function_exists('static_asset')) {
      */
     function static_asset($path, $secure = null)
     {
-        return app('url')->asset('public/' . $path, $secure);
+        return app('url')->asset($path, $secure);
     }
 }
-
 
 // if (!function_exists('isHttps')) {
 //     function isHttps()
@@ -632,7 +635,6 @@ if (!function_exists('getBaseURL')) {
     }
 }
 
-
 if (!function_exists('getFileBaseURL')) {
     function getFileBaseURL()
     {
@@ -643,7 +645,6 @@ if (!function_exists('getFileBaseURL')) {
         }
     }
 }
-
 
 if (!function_exists('isUnique')) {
     /**
@@ -753,7 +754,6 @@ if (!function_exists('get_images')) {
             $ids = explode(",", $given_ids);
         }
 
-
         return $with_trashed
         ? Upload::withTrashed()->whereIn('id', $ids)->get()
         : Upload::whereIn('id', $ids)->get();
@@ -861,129 +861,127 @@ if (!function_exists('addon_is_activated')) {
     }
 }
 
-
-
-
 /****************Delhivery APIs Calls***********/
 
 if (!function_exists('postCurl')) {
-    function postCurl($url, $json_data){
-        
+    function postCurl($url, $json_data)
+    {
+
         //echo "<pre>";print_r($json_data);die;
-        
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ch, CURLOPT_HEADER, FALSE);
-        curl_setopt($ch, CURLOPT_POST, TRUE);
-        curl_setopt($ch, CURLOPT_POSTFIELDS,$json_data);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(           
-			"Content-Type: application/json",				  
-            "Authorization: Token ".env('DELHIVERY_API')."",
-			
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            "Content-Type: application/json",
+            "Authorization: Token " . env('DELHIVERY_API') . "",
+
         ));
-		
-		$response = curl_exec($ch);
-        if(curl_error($ch)){
+
+        $response = curl_exec($ch);
+        if (curl_error($ch)) {
             echo 'Request Error:' . curl_error($ch);
             die;
         }
         curl_close($ch);
-        
-       // echo "<pre>";print_r($response);die;
-        
+
+        // echo "<pre>";print_r($response);die;
+
         return $response;
 
     }
 }
 
 if (!function_exists('getCurl')) {
-	function getCurl($url,$data){
-		$data = http_build_query($data);
-		$getUrl = $url."?".$data;
-		
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($ch, CURLOPT_URL, $getUrl);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-			"Content-Type: application/json",				  
-            "Authorization: Token ".env('DELHIVERY_API')."",
-		));
+    function getCurl($url, $data)
+    {
+        $data = http_build_query($data);
+        $getUrl = $url . "?" . $data;
 
-		$response = curl_exec($ch);
-		if(curl_error($ch)){
-			echo 'Request Error:' . curl_error($ch);
-			die();
-		}
-		curl_close($ch);
-		return $response;
-	}
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL, $getUrl);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            "Content-Type: application/json",
+            "Authorization: Token " . env('DELHIVERY_API') . "",
+        ));
+
+        $response = curl_exec($ch);
+        if (curl_error($ch)) {
+            echo 'Request Error:' . curl_error($ch);
+            die();
+        }
+        curl_close($ch);
+        return $response;
+    }
 }
 
 /****************Delhivery APIs Calls END ***********/
 
-
-
 /****************Whatsapp APIs Calls***********/
 
 if (!function_exists('whatsappPostCurl')) {
-    function whatsappPostCurl($url, $json_data){
-        
-        //echo "<pre>";print_r($json_data);die;		
-		$curl = curl_init();
-		curl_setopt_array($curl, array(
-			CURLOPT_URL => $url,
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_ENCODING => '',
-			CURLOPT_MAXREDIRS => 10,
-			CURLOPT_TIMEOUT => 0,
-			CURLOPT_FOLLOWLOCATION => true,
-			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-			CURLOPT_CUSTOMREQUEST => 'POST',
-			CURLOPT_POSTFIELDS => $json_data,
-			CURLOPT_HTTPHEADER => array(
-				"Content-Type: application/json",				  
-				"Authorization: Basic ".env('WHATSAPP_SECRET_KEY')."",
-				
-			),
-		));
+    function whatsappPostCurl($url, $json_data)
+    {
 
-		$response = curl_exec($curl);		
-		if(curl_error($curl)){
+        //echo "<pre>";print_r($json_data);die;
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $json_data,
+            CURLOPT_HTTPHEADER => array(
+                "Content-Type: application/json",
+                "Authorization: Basic " . env('WHATSAPP_SECRET_KEY') . "",
+
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        if (curl_error($curl)) {
             echo 'Request Error:' . curl_error($curl);
             die;
         }
-        curl_close($curl);        
-       // echo "<pre>";print_r($response);die;        
+        curl_close($curl);
+        // echo "<pre>";print_r($response);die;
         return $response;
     }
 }
 
 /****************Whatsapp APIs Calls END***********/
 
-
 /****************2Factor APIs Calls***********/
 
 if (!function_exists('smsPostCurl')) {
-    function smsPostCurl($json_data){        
-		
-		$api = 'c59e9994-ef4f-11ea-9fa5-0200cd936042';
-		$url = "http://2factor.in/API/V1/".$api."/ADDON_SERVICES/SEND/TSMS";
-		$headers = array(
-			"Content-Type: application/json",
-		);
-		$curl = curl_init($url);
-		curl_setopt($curl, CURLOPT_URL, $url);
-		curl_setopt($curl, CURLOPT_POST, true);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, $json_data);			
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		$response = curl_exec($curl);
-		curl_close($curl);
-		return $response;
-     
+    function smsPostCurl($json_data)
+    {
+
+        $api = 'c59e9994-ef4f-11ea-9fa5-0200cd936042';
+        $url = "http://2factor.in/API/V1/" . $api . "/ADDON_SERVICES/SEND/TSMS";
+        $headers = array(
+            "Content-Type: application/json",
+        );
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $json_data);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($curl);
+        curl_close($curl);
+        return $response;
+
     }
 }

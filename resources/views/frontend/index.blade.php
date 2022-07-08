@@ -1,5 +1,4 @@
 @extends('frontend.layouts.app')
-
 @section('content')
     <div class="container-fluid px-0 px-md-4 py-3">
         {{-- Slider And what's new product --}}
@@ -153,41 +152,40 @@
 
         {{-- best seller category --}}
         @if (count($best_seller_category) > 0)
-
-        <div class="row x-y-shadow py-2 py-md-3 px-0 mt-2 bg-white mt-4" id="sadar_recomendation">
-            <div class="px-2 py-4 px-md-4 py-md-3 bg-white rounded">
-                <div class="d-flex mb-3 align-items-baseline border-bottom justify-content-center">
-                    <h3 class="h5 fw-700 mb-0">
-                        <span
-                            class="border-bottom border-primary border-width-2 pb-3 d-inline-block">{{ translate('Best Sellers Category') }}</span>
-                    </h3>
-                </div>
-                <div class="aiz-carousel gutters-10 half-outside-arrow" data-items="6" data-xl-items="5"
-                    data-lg-items="4" data-md-items="3" data-sm-items="2" data-xs-items="2" data-arrows='true'
-                    data-infinite='true' data-autoplay='true'>
-                    @foreach ($best_seller_category as $best_seller)
-                        <div class="carousel-box">
-                            <div
-                                class="aiz-card-box border border-light rounded hov-shadow-md mt-1 mb-2 has-transition bg-white">
-                                <a href="{{ $best_seller['best_seller_category_links'] }}" target="_blank"
-                                    class="d-block">
-                                    <img class="img-fit lazyload mx-auto"
-                                        src="{{ $best_seller['best_seller_category_images'] }}"
-                                        data-src="{{ $best_seller['best_seller_category_images'] }}" alt="Whats hot"
-                                        style="object-fit: scale-down;" />
-                                    <h4 class="font-weight-normal text-center">
-                                        {{ $best_seller['best_seller_category_heading'] }}</h4>
-                                    <h5 class=" text-center font-weight-normal" style="color:#007345;">
-                                        {{ $best_seller['best_seller_category_offer'] }}</h5>
-                                    <h5 class="  text-center font-weight-normal" style="color:#858585;">
-                                        {{ $best_seller['best_seller_category_tag'] }}</h5>
-                                </a>
+            <div class="row x-y-shadow py-2 py-md-3 px-0 mt-2 bg-white mt-4" id="sadar_recomendation">
+                <div class="px-2 py-4 px-md-4 py-md-3 bg-white rounded">
+                    <div class="d-flex mb-3 align-items-baseline border-bottom justify-content-center">
+                        <h3 class="h5 fw-700 mb-0">
+                            <span
+                                class="border-bottom border-primary border-width-2 pb-3 d-inline-block">{{ translate('Best Sellers Category') }}</span>
+                        </h3>
+                    </div>
+                    <div class="aiz-carousel gutters-10 half-outside-arrow" data-items="6" data-xl-items="5"
+                        data-lg-items="4" data-md-items="3" data-sm-items="2" data-xs-items="2" data-arrows='true'
+                        data-infinite='true' data-autoplay='true'>
+                        @foreach ($best_seller_category as $best_seller)
+                            <div class="carousel-box">
+                                <div
+                                    class="aiz-card-box border border-light rounded hov-shadow-md mt-1 mb-2 has-transition bg-white">
+                                    <a href="{{ $best_seller['best_seller_category_links'] }}" target="_blank"
+                                        class="d-block">
+                                        <img class="img-fit lazyload mx-auto"
+                                            src="{{ $best_seller['best_seller_category_images'] }}"
+                                            data-src="{{ $best_seller['best_seller_category_images'] }}"
+                                            alt="Whats hot" style="object-fit: scale-down;" />
+                                        <h4 class="font-weight-normal text-center">
+                                            {{ $best_seller['best_seller_category_heading'] }}</h4>
+                                        <h5 class=" text-center font-weight-normal" style="color:#007345;">
+                                            {{ $best_seller['best_seller_category_offer'] }}</h5>
+                                        <h5 class="  text-center font-weight-normal" style="color:#858585;">
+                                            {{ $best_seller['best_seller_category_tag'] }}</h5>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
             </div>
-        </div>
         @endif
         {{-- best seller category --}}
         {{-- <div class="row x-y-shadow py-2 py-md-3 mt-2 bg-white mt-4">
@@ -233,40 +231,40 @@
         </div> --}}
         {{-- Recomended products --}}
         @if (count($recommended_on_sadar) > 0)
-        <div class="row x-y-shadow py-2 py-md-3 px-0 mt-2 bg-white mt-4" id="sadar_recomendation">
-            <div class="px-2 py-4 px-md-4 py-md-3 bg-white rounded">
-                <div class="d-flex mb-3 align-items-baseline border-bottom justify-content-center">
-                    <h3 class="h5 fw-700 mb-0">
-                        <span
-                            class="border-bottom border-primary border-width-2 pb-3 d-inline-block">{{ translate('Recommended on Sadar 24') }}</span>
-                    </h3>
-                </div>
-                <div class="aiz-carousel gutters-10 half-outside-arrow" data-items="8" data-xl-items="8"
-                    data-lg-items="5" data-md-items="3" data-sm-items="2" data-xs-items="2" data-arrows='true'
-                    data-infinite='true' data-autoplay='true'>
-                    @foreach ($recommended_on_sadar as $recommended)
-                    <div class="carousel-box">
-                        <div
-                            class="aiz-card-box border border-light rounded hov-shadow-md mt-1 mb-2 has-transition bg-white">
-                            <a href="{{ $recommended['recommended_on_sadar_links'] }}" target="_blank"
-                                class="d-block">
-                                <img class="img-fit lazyload mx-auto"
-                                    src="{{ $recommended['recommended_on_sadar_images'] }}"
-                                    data-src="{{ $recommended['recommended_on_sadar_images'] }}" alt="Whats hot"
-                                    style="object-fit: scale-down;" />
-                                <h4 class="font-weight-normal text-center">
-                                    {{ $recommended['recommended_on_sadar_heading'] }}</h4>
-                                <h5 class=" text-center font-weight-normal" style="color:#007345;">
-                                    {{ $recommended['recommended_on_sadar_offer'] }}</h5>
-                                <h5 class="  text-center font-weight-normal" style="color:#858585;">
-                                    {{ $recommended['recommended_on_sadar_tag'] }}</h5>
-                            </a>
-                        </div>
+            <div class="row x-y-shadow py-2 py-md-3 px-0 mt-2 bg-white mt-4" id="sadar_recomendation">
+                <div class="px-2 py-4 px-md-4 py-md-3 bg-white rounded">
+                    <div class="d-flex mb-3 align-items-baseline border-bottom justify-content-center">
+                        <h3 class="h5 fw-700 mb-0">
+                            <span
+                                class="border-bottom border-primary border-width-2 pb-3 d-inline-block">{{ translate('Recommended on Sadar 24') }}</span>
+                        </h3>
                     </div>
-                    @endforeach
+                    <div class="aiz-carousel gutters-10 half-outside-arrow" data-items="8" data-xl-items="8"
+                        data-lg-items="5" data-md-items="3" data-sm-items="2" data-xs-items="2" data-arrows='true'
+                        data-infinite='true' data-autoplay='true'>
+                        @foreach ($recommended_on_sadar as $recommended)
+                            <div class="carousel-box">
+                                <div
+                                    class="aiz-card-box border border-light rounded hov-shadow-md mt-1 mb-2 has-transition bg-white">
+                                    <a href="{{ $recommended['recommended_on_sadar_links'] }}" target="_blank"
+                                        class="d-block">
+                                        <img class="img-fit lazyload mx-auto"
+                                            src="{{ $recommended['recommended_on_sadar_images'] }}"
+                                            data-src="{{ $recommended['recommended_on_sadar_images'] }}"
+                                            alt="Whats hot" style="object-fit: scale-down;" />
+                                        <h4 class="font-weight-normal text-center">
+                                            {{ $recommended['recommended_on_sadar_heading'] }}</h4>
+                                        <h5 class=" text-center font-weight-normal" style="color:#007345;">
+                                            {{ $recommended['recommended_on_sadar_offer'] }}</h5>
+                                        <h5 class="  text-center font-weight-normal" style="color:#858585;">
+                                            {{ $recommended['recommended_on_sadar_tag'] }}</h5>
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
-        </div>
         @endif
         {{-- Recomended products --}}
         {{-- Category Products --}}
@@ -586,28 +584,29 @@
             </div>
         </div>
         @if (count($deal_of_the_day) > 0)
-        <div class="row x-y-shadow py-2 py-md-3 px-0 bg-white mt-2 mt-4">
-            <div class="d-flex align-items-baseline border-bottom justify-content-center mb-4">
-                <h3 class="h5 fw-700 mb-0">
-                    <span
-                        class="border-bottom border-primary border-width-2 pb-3 d-inline-block">{{ translate('Deal Of The Day') }}</span>
-                </h3>
-            </div>
-            @foreach ($deal_of_the_day as $deal)
-                <div class="col-6 col-md-4 col-lg-2">
-                    <div class="category-box p-0 p-md-auto img-hover-zoom--colorize">
-                        {{-- <h4>Home Decor</h4> --}}
-                        <a href="{{ $deal['deal_of_the_day_links'] }}" target="_blank" class="img-link on-hov-dis-ef"
-                            style="position:relative;"><img src="{{ $deal['deal_of_the_day_images'] }}"
-                                {{-- src="{{my_asset('uploads/all/W6Im3NOUkoMA9iuaJK4LNbnn7bZ8On0roKb0QiHu.jpg')}}" --}} class="img-fit zoom" alt="sadar24">
-
-                        </a>
-                        <a href="{{ $deal['deal_of_the_day_links'] }}" target="_blank" class="custom-link"
-                            target="_blank">{{ $deal['deal_of_the_day_heading'] }}</a>
-                    </div>
+            <div class="row x-y-shadow py-2 py-md-3 px-0 bg-white mt-2 mt-4">
+                <div class="d-flex align-items-baseline border-bottom justify-content-center mb-4">
+                    <h3 class="h5 fw-700 mb-0">
+                        <span
+                            class="border-bottom border-primary border-width-2 pb-3 d-inline-block">{{ translate('Deal Of The Day') }}</span>
+                    </h3>
                 </div>
-            @endforeach
-        </div>
+                @foreach ($deal_of_the_day as $deal)
+                    <div class="col-6 col-md-4 col-lg-2">
+                        <div class="category-box p-0 p-md-auto img-hover-zoom--colorize">
+                            {{-- <h4>Home Decor</h4> --}}
+                            <a href="{{ $deal['deal_of_the_day_links'] }}" target="_blank"
+                                class="img-link on-hov-dis-ef" style="position:relative;"><img
+                                    src="{{ $deal['deal_of_the_day_images'] }}" {{-- src="{{my_asset('uploads/all/W6Im3NOUkoMA9iuaJK4LNbnn7bZ8On0roKb0QiHu.jpg')}}" --}}
+                                    class="img-fit zoom" alt="sadar24">
+
+                            </a>
+                            <a href="{{ $deal['deal_of_the_day_links'] }}" target="_blank" class="custom-link"
+                                target="_blank">{{ $deal['deal_of_the_day_heading'] }}</a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         @endif
         {{-- <div class="row x-y-shadow py-2 py-md-3 mt-2 bg-white mt-4" style="position: relative;">
             <div class="col-12 img-hover-zoom-out-colorize">
